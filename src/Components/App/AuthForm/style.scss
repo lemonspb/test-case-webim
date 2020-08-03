@@ -1,10 +1,13 @@
 .auth-form{
     margin: 0 auto;
-    height: 100%;
-    width: 100%;
+    width: 50%;
+    height: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: #fff;
+    box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
+    border-radius: .2em;
     flex-direction: column;
     .ant-form{
         width: 50%;
@@ -13,7 +16,7 @@
          align-items: center;
          justify-content: center;
       .ant-form-item-control-input{
-          width: 50%;
+          width: 100%;
       }
      }
 }
