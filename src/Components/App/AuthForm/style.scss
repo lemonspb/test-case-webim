@@ -8,5 +8,16 @@
     flex-direction: column;
     .ant-form{
         width: 50%;
-    }
+     .submit-block .ant-form-item-control{
+         display: flex;
+         align-items: center;
+         justify-content: center;
+      .ant-form-item-control-input{
+          width: 50%;
+      }
+     }
+}
+}
+.login-form-button{
+    width: 100%;
 }

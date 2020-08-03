@@ -64,7 +64,9 @@ interface IAuth {
     <Form.Item>
     </Form.Item>
 
-    <Form.Item>
+    <Form.Item
+    className="submit-block"
+    >
       <Button type="primary" htmlType="submit" className="login-form-button">
         Войти
       </Button>
