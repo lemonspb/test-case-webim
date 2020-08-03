@@ -8,8 +8,10 @@ import {BrowserRouter as Router,  Route} from 'react-router-dom';
 ReactDOM.render(
   <React.StrictMode>
     <Router>  
-<Route  path='/login'  exact render={ ()=> <PageLogin/>}/>
-<Route  path='/main'  exact render={ ()=> <PageMain/>}/>
+{window.localStorage.token  && <Route  path='/main'  exact render={ ()=> <PageMain/>}/>} 
+
+ <Route  path='/login'  exact render={ ()=> <PageLogin/>}/>
+
 </Router>  
   </React.StrictMode>,
   document.getElementById('root')

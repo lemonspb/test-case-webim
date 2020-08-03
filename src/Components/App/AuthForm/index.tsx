@@ -25,7 +25,7 @@ interface IAuth {
           localStorage.setItem('token', res.token)
           message.success('Вы успешно зарегестрированы')
           props.history.push('/main');
-
+          window.location.reload()
         }
       })
     };
@@ -52,7 +52,7 @@ interface IAuth {
       name="password"
       rules={[
         { required: true, message: 'Пожалуйста введите пароль' },
-        {pattern:/^(?=.*[A-Z])(?=.*\d).{8,}$/g,message: 'Пароль должен быть не короче 8 символов и содержать буквы и цифры и содержать хотя бы одну заглавную букву '}
+        {pattern:/^(?=.*[A-Z])(?=.*\d).{8,}$/g,message: 'Пароль должен быть не короче 8 символов, содержать хотя бы одну заглавную букву и цифру'}
     ]}
     >
       <Input

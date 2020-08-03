@@ -22,7 +22,9 @@ export default class ApplicationServiсes {
      const res = await this.getResource(`api-token-auth/`,bodys);
      return res
    };
- 
+   exit = async () => {
+      window.localStorage.removeItem('token')
+};
   
   abort(){
    return this.controller.abort()

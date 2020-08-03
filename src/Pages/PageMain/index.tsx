@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Header from '../../Components/Header'
   const PageMain = () => {
 
 
@@ -10,7 +10,7 @@ import React from 'react';
     return (
 
         <>
-        fsdfdsl;fkl;sdkfl;skd;flsd
+        <Header />
         </>
         );
   };
