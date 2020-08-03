@@ -1,5 +1,5 @@
 export default class ApplicationServiсes {
-    BASE_URL:string  = "http://emphasoft-test-assignment.herokuapp.com/";
+    BASE_URL:string  = "https://emphasoft-test-assignment.herokuapp.com/";
       controller = new AbortController();
       signal = this.controller.signal
    getResource = async (type:string, user_auth:any) => {
@@ -20,11 +20,7 @@ export default class ApplicationServiсes {
         ...body
        }
      const res = await this.getResource(`api-token-auth/`,bodys);
-       try {
-        console.log(res)
-       } catch (error) {
-          console.log(error) 
-       }
+     return res
    };
  
   
