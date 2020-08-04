@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Spin, Alert } from 'antd';
+import { Typography, Spin, Modal } from 'antd';
 import Header from '../../Components/Header';
 import './style.scss';
 import { Input } from 'antd';
+import  CreateUserForm from '../../Components/App/CreateUserForm'
 import ApplicationServiсes from '../../Services'
 import { SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
 
@@ -75,6 +76,12 @@ const PageMain = () => {
           })}
         </div>
       </div>
+      <Modal 
+        title="Создать нового пользователя"
+        visible={true}
+      >
+        <CreateUserForm />
+      </Modal>
     </div>
   );
 };

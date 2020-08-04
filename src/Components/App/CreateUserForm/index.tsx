@@ -1,8 +1,7 @@
-import { Form, Input, Button, message, Typography } from 'antd';
+import { Form, Input, Button, message, Typography, Modal } from 'antd';
 import React from 'react';
 import ApplicationServiсes from '../../../Services'
 import {withRouter} from 'react-router-dom';
-import './style.scss';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 interface IAuth {
@@ -11,7 +10,7 @@ interface IAuth {
 }
 
 
-  const AuthForm = (props:any) => {
+  const CreateUserForm = (props:any) => {
  const applicationServiсes = new ApplicationServiсes();
  const { Title } = Typography;
 
@@ -32,8 +31,7 @@ interface IAuth {
   
  
     return (
-      <div className='auth-form'>
-      <Title level={2}>Авторизация</Title>
+      <div className='create-user-form'>
     <Form
     name="normal_login"
     className="login-form"
@@ -61,7 +59,20 @@ interface IAuth {
         placeholder="Password"
       />
     </Form.Item>
-        <Form.Item
+    <Form.Item
+      name="password"
+      rules={[
+        { required: true, message: 'Пожалуйста введите пароль' },
+        {pattern:/^(?=.*[A-Z])(?=.*\d).{8,}$/g,message: 'Пароль должен быть не короче 8 символов, содержать хотя бы одну заглавную букву и цифру'}
+    ]}
+    >
+      <Input
+        prefix={<LockOutlined className="site-form-item-icon" />}
+        type="password"
+        placeholder="Password"
+      />
+    </Form.Item>
+    <Form.Item
       name="password"
       rules={[
         { required: true, message: 'Пожалуйста введите пароль' },
@@ -78,14 +89,16 @@ interface IAuth {
     className="submit-block"
     >
       <Button type="primary" htmlType="submit" className="login-form-button">
-        Войти
+        Создать
       </Button>
     </Form.Item>
   </Form>
   </div>
+  
+  
 );
   };
   
 
 
-  export default withRouter(AuthForm)
+  export default withRouter(CreateUserForm)
