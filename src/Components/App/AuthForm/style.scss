@@ -1,6 +1,6 @@
 .auth-form{
     margin: 0 auto;
-    width: 50%;
+    width: 30%;
     height: 50%;
     display: flex;
     align-items: center;
@@ -9,8 +9,15 @@
     box-shadow: 0 3px 6px rgba(0,0,0,.16), 0 3px 6px rgba(0,0,0,.23);
     border-radius: .2em;
     flex-direction: column;
+    @media screen and (max-width: 900px) {
+      width: 60%;
+      }
+      @media screen and (max-width: 600px) {
+        width: 80%;
+        }
     .ant-form{
-        width: 50%;
+        width: 80%;
+  
      .submit-block .ant-form-item-control{
          display: flex;
          align-items: center;

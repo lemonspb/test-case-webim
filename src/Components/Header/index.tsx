@@ -20,9 +20,13 @@ const Header = (props: any) => {
             <PageHeader
                 className="site-page-header"
                 title="Webim"
+                ghost={false}
                 subTitle="Главная страница"
                 extra={[
-                    <Button key="1" type="primary" onClick={() => exit()}>
+                    <Button key="1" type="primary" danger onClick={() => props.openModal()}>
+                    Создать пользователя
+                  </Button>,
+                    <Button key="2" type="primary" onClick={() => exit()}>
                         Выход
             </Button>,
                 ]}

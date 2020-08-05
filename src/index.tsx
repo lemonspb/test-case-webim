@@ -10,14 +10,12 @@ import {BrowserRouter as Router,  Route, Switch} from 'react-router-dom';
 
 
 ReactDOM.render(
-  <React.StrictMode>
     <Router>  
       <Switch>
 {window.localStorage.token  && <Route  path='/main'  exact render={ ()=> <PageMain/>}/>} 
  <Route  path='/' render={ ()=> <PageLogin/>}/>
  </Switch>
-</Router>  
-  </React.StrictMode>,
+</Router>,  
   document.getElementById('root')
 );
 

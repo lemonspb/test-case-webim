@@ -1,13 +1,10 @@
-import { Form, Input, Button, message, Typography, Modal } from 'antd';
+import { Form, Input, Button, message, Typography, Switch } from 'antd';
 import React from 'react';
 import ApplicationServiсes from '../../../Services'
 import {withRouter} from 'react-router-dom';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-interface IAuth {
-  username?: string;
-  password?: string;
-}
+
 
 
   const CreateUserForm = (props:any) => {
@@ -15,17 +12,12 @@ interface IAuth {
  const { Title } = Typography;
 
 
-    const onFinish = (values:IAuth) =>{
-      applicationServiсes.getTokenAuth(values).then((res)=>{
-        if( res.hasOwnProperty('non_field_errors')){
-          message.error('Не верный логин или пароль')
-        }
-        if(res.hasOwnProperty('token')){
-          localStorage.setItem('token', res.token)
-          message.success('Вы успешно зарегестрированы')
-          props.history.push('/main');
-          window.location.reload()
-        }
+    const onFinish = (values:any) =>{
+
+      if(values.is_active === undefined)  values.is_active = false
+      applicationServiсes.createNewUser(values).then((res)=>{
+        applicationServiсes.getListUsers()  
+
       })
     };
   
@@ -33,9 +25,7 @@ interface IAuth {
     return (
       <div className='create-user-form'>
     <Form
-    name="normal_login"
-    className="login-form"
-    initialValues={{ remember: true }}
+    initialValues={{ remember: false }}
     onFinish={onFinish}
   >
     <Form.Item
@@ -44,7 +34,7 @@ interface IAuth {
         { required: true, message: 'Пожалуйста введите имя!' },
     ]}
     >
-      <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+      <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Никнейм" />
     </Form.Item>
     <Form.Item
       name="password"
@@ -54,37 +44,34 @@ interface IAuth {
     ]}
     >
       <Input
-        prefix={<LockOutlined className="site-form-item-icon" />}
         type="password"
-        placeholder="Password"
+        placeholder="Пароль"
       />
     </Form.Item>
     <Form.Item
-      name="password"
+      name="first_name"
       rules={[
-        { required: true, message: 'Пожалуйста введите пароль' },
-        {pattern:/^(?=.*[A-Z])(?=.*\d).{8,}$/g,message: 'Пароль должен быть не короче 8 символов, содержать хотя бы одну заглавную букву и цифру'}
+        {max:30,message: 'не более 30 символов'}
     ]}
     >
+
       <Input
-        prefix={<LockOutlined className="site-form-item-icon" />}
-        type="password"
-        placeholder="Password"
+        placeholder="first name"
       />
     </Form.Item>
     <Form.Item
-      name="password"
+      name="last_name"
       rules={[
-        { required: true, message: 'Пожалуйста введите пароль' },
-        {pattern:/^(?=.*[A-Z])(?=.*\d).{8,}$/g,message: 'Пароль должен быть не короче 8 символов, содержать хотя бы одну заглавную букву и цифру'}
+        {max: 30 ,message: 'не более 150 символов'}
     ]}
     >
       <Input
-        prefix={<LockOutlined className="site-form-item-icon" />}
-        type="password"
-        placeholder="Password"
+        placeholder="Фамилия"
       />
     </Form.Item>
+    <Form.Item name="is_active" label="Активен" >
+        <Switch />
+      </Form.Item>
     <Form.Item
     className="submit-block"
     >

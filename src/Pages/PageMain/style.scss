@@ -1,6 +1,14 @@
 .page-main{
+    background-color: #f0f0f0;
 &__wrap{
     padding: 16px 24px;
 
+}
+&__top-line{
+    margin-bottom: 1rem;
+    display: flex;
 }    
+&__sort{
+    padding-right: 0.5rem;
+}
 }
