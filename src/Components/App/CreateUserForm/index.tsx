@@ -1,5 +1,5 @@
 import { Form, Input, Button, message, Typography, Switch } from 'antd';
-import React from 'react';
+import React,{useState} from 'react';
 import ApplicationServiсes from '../../../Services'
 import {withRouter} from 'react-router-dom';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -8,16 +8,28 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 
   const CreateUserForm = (props:any) => {
- const applicationServiсes = new ApplicationServiсes();
- const { Title } = Typography;
+    const [form] = Form.useForm();
 
+ const applicationServiсes = new ApplicationServiсes();
+ const [loading, setLoading] = useState(false)
+  const initialValues:any = {
+    name:'',
+    password:'',
+    first_name:'',
+    last_name:'',
+  }
 
     const onFinish = (values:any) =>{
-
+      setLoading(true)
+      console.log(values)
       if(values.is_active === undefined)  values.is_active = false
       applicationServiсes.createNewUser(values).then((res)=>{
-        applicationServiсes.getListUsers()  
-
+        message.success('Создан новый пользователь')
+        setLoading(false)
+        props.openModal()
+        values = initialValues
+        form.resetFields();
+        props.getListUsers()
       })
     };
   
@@ -25,7 +37,8 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
     return (
       <div className='create-user-form'>
     <Form
-    initialValues={{ remember: false }}
+    form={form}
+    initialValues={{ ...initialValues }}
     onFinish={onFinish}
   >
     <Form.Item
@@ -56,7 +69,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
     >
 
       <Input
-        placeholder="first name"
+        placeholder="Имя"
       />
     </Form.Item>
     <Form.Item
@@ -75,7 +88,10 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
     <Form.Item
     className="submit-block"
     >
-      <Button type="primary" htmlType="submit" className="login-form-button">
+      <Button 
+                loading={loading}
+
+      type="primary" htmlType="submit" className="login-form-button">
         Создать
       </Button>
     </Form.Item>

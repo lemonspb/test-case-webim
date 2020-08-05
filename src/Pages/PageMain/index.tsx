@@ -8,28 +8,49 @@ import ListItem from '../../Components/ListItem';
 import { SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
 
 const PageMain = () => {
+  const applicationServiсes = new ApplicationServiсes()
 
   const { Title } = Typography;
   const [userList, setUserList] = useState([])
   const [initUserList, setInitUserList] = useState([])
   const [isOpenModal, setIsOpenModal] = useState(false)
-
+  const [searchValue, setSearchValue] = useState('') 
   const [typeSorting, setTypeSorting] = useState({
     desc: false,
   })
   const [loader, setLoader] = useState(false)
 
-  const applicationServiсes = new ApplicationServiсes()
+  const onSearch = (value: any) => {
+    setSearchValue(value)
+    setUserList(userList.filter((user: any) =>
+      user.username.toLowerCase()
+        .startsWith(value.toLowerCase()
+          .trimStart())))
+    if (value === '') {
+      setUserList(initUserList)
+    }
+  }
+
+
+  const getListUsers = () => {
+    applicationServiсes.getListUsers().then((list) => {
+      const sortList: any = [...list]
+      sortList.sort((a: any, b: any) => typeSorting.desc ? b.id - a.id : a.id - b.id);
+      if(searchValue !==''){
+        onSearch(searchValue)
+      } 
+      else{
+        setInitUserList(sortList)
+        setUserList(sortList)
+      }
+
+    })
+  }
   useEffect(() => {
     setLoader(true)
-    applicationServiсes.getListUsers().then((list) => {
+    getListUsers()
+    setLoader(false)
 
-      const sortList: any = [...list]
-      sortList.sort((a: any, b: any) => a.id - b.id);
-      setInitUserList(sortList)
-      setUserList(sortList)
-      setLoader(false)
-    })
   }, [])
 
 
@@ -50,15 +71,7 @@ const PageMain = () => {
     setIsOpenModal(!isOpenModal)
   }
 
-  const onSearch = (event: any) => {
-    setUserList(userList.filter((user: any) =>
-      user.username.toLowerCase()
-        .startsWith(event.target.value.toLowerCase()
-          .trimStart())))
-    if (event.target.value === '') {
-      setUserList(initUserList)
-    }
-  }
+
 
 
   return (
@@ -75,7 +88,11 @@ const PageMain = () => {
           </div>
         <Input
           placeholder="Поиск по имени"
-          onChange={value => onSearch(value)} />
+          onChange={((value) =>
+            {
+              const val = value.target.value
+
+              return onSearch(val)})} />
           </div>
         <div className='page-main__list'>
           {userList.map((user: any) => {
@@ -91,7 +108,9 @@ const PageMain = () => {
         visible={isOpenModal}
         onCancel={openModal}
       >
-        <CreateUserForm />
+        <CreateUserForm 
+        getListUsers={getListUsers}
+        openModal={openModal} />
       </Modal>
     </div>
   );
