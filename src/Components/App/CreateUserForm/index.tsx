@@ -26,10 +26,10 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
       applicationServiсes.createNewUser(values).then((res)=>{
         message.success('Создан новый пользователь')
         setLoading(false)
-        props.openModal()
+        props.openModal();
         values = initialValues
         form.resetFields();
-        props.getListUsers()
+        props.getListUsers();
       })
     };
   
@@ -47,7 +47,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
         { required: true, message: 'Пожалуйста введите имя!' },
     ]}
     >
-      <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Никнейм" />
+      <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
     </Form.Item>
     <Form.Item
       name="password"
@@ -58,7 +58,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
     >
       <Input
         type="password"
-        placeholder="Пароль"
+        placeholder="Password"
       />
     </Form.Item>
     <Form.Item
@@ -69,28 +69,27 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
     >
 
       <Input
-        placeholder="Имя"
+        placeholder="First name"
       />
     </Form.Item>
     <Form.Item
       name="last_name"
       rules={[
-        {max: 30 ,message: 'не более 150 символов'}
+        {max: 150 ,message: 'не более 150 символов'}
     ]}
     >
       <Input
-        placeholder="Фамилия"
+        placeholder="Last name"
       />
     </Form.Item>
-    <Form.Item name="is_active" label="Активен" >
+    <Form.Item name="is_active" label="Active" >
         <Switch />
       </Form.Item>
     <Form.Item
     className="submit-block"
     >
       <Button 
-                loading={loading}
-
+      loading={loading}
       type="primary" htmlType="submit" className="login-form-button">
         Создать
       </Button>
