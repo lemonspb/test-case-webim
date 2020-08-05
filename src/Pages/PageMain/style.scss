@@ -11,4 +11,8 @@
 &__sort{
     padding-right: 0.5rem;
 }
+&__list{
+   max-height: 70vh;
+   overflow-y: auto; 
+}
 }
