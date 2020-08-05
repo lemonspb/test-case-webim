@@ -1,5 +1,5 @@
 import { Form, Input, Button, message, Typography, Switch } from 'antd';
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import ApplicationServiсes from '../../../Services'
 import {withRouter} from 'react-router-dom';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -7,7 +7,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 
 
-  const CreateUserForm = (props:any) => {
+  const EditUserForm = (props:any) => {
     const [form] = Form.useForm();
 
  const applicationServiсes = new ApplicationServiсes();
@@ -19,31 +19,19 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
     last_name:'',
   }
 
-    const onFinish = (values:any) =>{
-      setLoading(true)
-      console.log(values)
-      if(values.is_active === undefined)  values.is_active = false
-      applicationServiсes.createNewUser(values).then((res)=>{
-        console.log(res)
-        if(res.hasOwnProperty('status') && res.status === '400'){
-          message.success('что то нет так')
+  useEffect(()=>{
+    form.resetFields();
+  },[props.userData])
 
-        }
-        message.success('Создан новый пользователь')
-        setLoading(false)
-        props.openModal();
-        values = initialValues
-        form.resetFields();
-        props.getListUsers();
-      })
+    const onFinish = (values:any) =>{
+ 
     };
-  
  
     return (
-      <div className='create-user-form'>
+      <div className='edit-user-form'>
     <Form
     form={form}
-    initialValues={{ ...initialValues }}
+    initialValues={{ ...props.userData }}
     onFinish={onFinish}
   >
     <Form.Item
@@ -96,7 +84,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
       <Button 
       loading={loading}
       type="primary" htmlType="submit" className="login-form-button">
-        Создать
+        Редактировать
       </Button>
     </Form.Item>
   </Form>
@@ -108,4 +96,4 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
   
 
 
-  export default withRouter(CreateUserForm)
+  export default withRouter(EditUserForm)

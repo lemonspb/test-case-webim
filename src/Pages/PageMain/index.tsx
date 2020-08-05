@@ -3,6 +3,8 @@ import { Typography, Spin, Modal, Input } from 'antd';
 import Header from '../../Components/Header';
 import './style.scss';
 import CreateUserForm from '../../Components/App/CreateUserForm';
+import EditUserForm from '../../Components/App/EditUserForm';
+
 import ApplicationServiсes from '../../Services';
 import ListItem from '../../Components/ListItem';
 import { SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
@@ -12,23 +14,19 @@ const PageMain = () => {
 
   const { Title } = Typography;
   const [userList, setUserList] = useState([])
+  const [userData, setUserdata] = useState({})
   const [initUserList, setInitUserList] = useState([])
-  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [isOpenCreateUserModal, setIsOpenCreateUserModal] = useState(false)
+  const [isOpenEditUserModal, setIsOpenEditUserModal] = useState(false)
   const [searchValue, setSearchValue] = useState('') 
-  const [typeSorting, setTypeSorting] = useState({
-    desc: false,
-  })
+  const [typeSorting, setTypeSorting] = useState({desc: false})
   const [loader, setLoader] = useState(false)
 
   const onSearch = (value: any) => {
     setSearchValue(value)
-    setUserList(userList.filter((user: any) =>
+    setUserList(initUserList.filter((user: any) =>
       user.username.toLowerCase()
-        .startsWith(value.toLowerCase()
-          .trimStart())))
-    if (value === '') {
-      setUserList(initUserList)
-    }
+        .includes(value.toLowerCase().trimStart())))
   }
 
 
@@ -53,6 +51,10 @@ const PageMain = () => {
 
   }, [])
 
+const getUserData = (data:any) =>{
+  console.log(data)
+  setUserdata(data)
+}
 
   const sorting = () => {
     const desc = !typeSorting.desc
@@ -67,17 +69,20 @@ const PageMain = () => {
     setUserList(sortList)
   }
 
-  const openModal = () => {
-    setIsOpenModal(!isOpenModal)
+  const openCreateUserModal = () => {
+    setIsOpenCreateUserModal(!isOpenCreateUserModal)
   }
 
+  const openEditUserModal = () => {
+    setIsOpenEditUserModal(!isOpenEditUserModal)
+  }
 
 
 
   return (
     <div className='page-main'>
       <Header 
-      openModal={openModal}
+      openModal={openCreateUserModal}
       />
       <div className='page-main__wrap'>
         <Title level={3}>Список пользователей</Title>
@@ -88,16 +93,16 @@ const PageMain = () => {
           </div>
         <Input
           placeholder="Поиск по имени"
-          onChange={((value) =>
-            {
+          onChange={((value) =>{
               const val = value.target.value
-
               return onSearch(val)})} />
           </div>
         <div className='page-main__list'>
           {userList.map((user: any) => {
             return (
-              <ListItem user={user} />              
+              <ListItem user={user} openModal={openEditUserModal} 
+              getUserData={getUserData}
+              />              
             )
           })}
         </div>
@@ -105,12 +110,23 @@ const PageMain = () => {
       <Modal
         footer={null}
         title="Создать нового пользователя"
-        visible={isOpenModal}
-        onCancel={openModal}
+        visible={isOpenCreateUserModal}
+        onCancel={openCreateUserModal}
       >
         <CreateUserForm 
         getListUsers={getListUsers}
-        openModal={openModal} />
+        openModal={openCreateUserModal} />
+      </Modal>
+      <Modal
+        footer={null}
+        title="Редактировать пользователя"
+        visible={isOpenEditUserModal}
+        onCancel={openEditUserModal}
+      >
+        <EditUserForm 
+        userData={userData}
+        getListUsers={getListUsers}
+        openModal={openEditUserModal} />
       </Modal>
     </div>
   );

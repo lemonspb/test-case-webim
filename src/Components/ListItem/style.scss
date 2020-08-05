@@ -1,9 +1,30 @@
-.listIten{
-    width: 30%;
+.listItem{
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-radius: .3em;
-    padding: 0.8rem;
+    padding: 1rem;
+    font-size: 1.2rem;
     box-sizing: border-box;
     background-color: #ffffff;
-    margin-bottom: 2px;
+    margin-bottom: 5px;
+    cursor: pointer;
     box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+    border: 1px solid transparent;
+    transition: 300ms ease-in-out;
+    
+    &:hover{
+    border-color: #40a9ff;
+    border-right-width: 1px !important;
+    }
+    @media screen and (max-width: 900px) {
+        width: 60%;
+        }
+        @media screen and (max-width: 600px) {
+          width: 80%;
+          }
+    &__item{
+       span{font-weight: 700;} 
+    }
 }

@@ -3,7 +3,17 @@ export default class ApplicationServiсes {
   getResource = async (type: string, params: any) => {
     const res = await fetch(`${this.BASE_URL}${type}`, {
       ...params
-    });
+    })
+
+    if (!res.ok) {
+      const status  =  res.status
+      const resResult = res.json()
+
+      return await {
+        resResult,
+        status
+      }
+    }
     return await res.json();
 
   };
@@ -17,7 +27,7 @@ export default class ApplicationServiсes {
         'Content-Type': 'application/json',
       }
     }
-    const res = await this.getResource(`api-token-auth/`, params);
+    const res =  this.getResource(`api-token-auth/`, params);
     return res
   };
 

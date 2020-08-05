@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import './style.scss';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-interface IAuth {
+interface Auth {
   username?: string;
   password?: string;
 }
@@ -16,7 +16,7 @@ const AuthForm = (props: any) => {
   const { Title } = Typography;
   const [loading, setLoading] = useState(false)
 
-  const onFinish = (values: IAuth) => {
+  const onFinish = (values: Auth) => {
     setLoading(true)
     applicationServiсes.getTokenAuth(values).then((res) => {
       if (res.hasOwnProperty('non_field_errors')) {
