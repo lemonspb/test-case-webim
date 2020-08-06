@@ -1,12 +1,15 @@
 import React from 'react';
 import { PageHeader, Button } from 'antd';
 import ApplicationServiсes from '../../Services'
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+
+interface  Header extends RouteComponentProps<any> {
+    openModal: Function
+  }
+  
 
 
-
-
-const Header = (props: any) => {
+const Header = (props: Header) => {
     const applicationServiсes = new ApplicationServiсes();
 
     const exit = () => {

@@ -1,8 +1,7 @@
-import { Form, Input, Button, message, Typography, Switch } from 'antd';
+import { Form, Input, Button, message, Switch } from 'antd';
 import React, { useState, useEffect } from 'react';
 import ApplicationServiсes from '../../../Services'
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { UserInfo } from '../../../Interface';
 
 
@@ -13,10 +12,7 @@ interface  EditUserForm extends RouteComponentProps<any> {
 }
 
 
-
-
 const EditUserForm = (props:EditUserForm) => {
-  console.log(props)
   const [form] = Form.useForm();
   const { id = 0 } = props.userData
   const applicationServiсes = new ApplicationServiсes();
@@ -31,6 +27,11 @@ const EditUserForm = (props:EditUserForm) => {
     setLoading(true)
     applicationServiсes.editUser(values, id).then((val) => {
       setLoading(false)
+      message.success('Пользователь отредактирован')
+      setLoading(false)
+      props.openModal();
+      form.resetFields();
+      props.getListUsers();
     })
   };
 
@@ -44,10 +45,11 @@ const EditUserForm = (props:EditUserForm) => {
         <Form.Item
           name="username"
           rules={[
-            { required: true, message: 'Пожалуйста введите имя!' },
+            { pattern: /^[\w.@+-]+$/g, message: 'Имя содержит недопустимый символ' },
+            { required: true, message: 'Пожалуйста введите имя!' }
           ]}
         >
-          <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+          <Input  placeholder="Username" />
         </Form.Item>
         <Form.Item
           name="password"

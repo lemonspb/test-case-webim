@@ -1,15 +1,15 @@
-import { Form, Input, Button, message, Typography, Switch } from 'antd';
+import { Form, Input, Button, message, Switch } from 'antd';
 import React,{useState} from 'react';
 import ApplicationServiсes from '../../../Services'
 import {withRouter} from 'react-router-dom';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import { UserInfo } from '../../../Interface';
 
 
 
-
-  const CreateUserForm = (props:any) => {
+const CreateUserForm = (props:any) => {
     const [form] = Form.useForm();
+
 
  const applicationServiсes = new ApplicationServiсes();
  const [loading, setLoading] = useState(false)
@@ -22,12 +22,10 @@ import { UserInfo } from '../../../Interface';
 
     const onFinish = (values:UserInfo) =>{
       setLoading(true)
-      console.log(values)
       if(values.is_active === undefined)  values.is_active = false
       applicationServiсes.createNewUser(values).then((res)=>{
-        console.log(res)
         if(res.hasOwnProperty('status') && res.status === '400'){
-          message.success('что то нет так')
+          message.error('что то нет так')
 
         }
         message.success('Создан новый пользователь')
@@ -50,10 +48,11 @@ import { UserInfo } from '../../../Interface';
     <Form.Item
       name="username"
       rules={[
-        { required: true, message: 'Пожалуйста введите имя!' },
+        { pattern: /^[\w.@+-]+$/g, message: 'Имя содержит недопустимый символ' },
+        { required: true, message: 'Пожалуйста введите имя!' }
     ]}
     >
-      <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+      <Input  placeholder="Username" />
     </Form.Item>
     <Form.Item
       name="password"

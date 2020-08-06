@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Modal, Input } from 'antd';
 import Header from '../../Components/Header';
 import './style.scss';
-import CreateUserForm from '../../Components/App/CreateUserForm';
-import EditUserForm from '../../Components/App/EditUserForm';
+import CreateUserForm from '../../Components/Forms/CreateUserForm';
+import EditUserForm from '../../Components/Forms/EditUserForm';
 import { UserInfo } from '../../Interface'
 import ApplicationServiсes from '../../Services';
 import ListItem from '../../Components/ListItem';
@@ -13,9 +13,9 @@ const PageMain = () => {
   const applicationServiсes = new ApplicationServiсes()
 
   const { Title } = Typography;
-  const [userList, setUserList] = useState([])
+  const [userList, setUserList] = useState<UserInfo[]>([])
   const [userData, setUserdata] = useState({})
-  const [initUserList, setInitUserList] = useState([])
+  const [initUserList, setInitUserList] = useState<UserInfo[]>([])
   const [isOpenCreateUserModal, setIsOpenCreateUserModal] = useState(false)
   const [isOpenEditUserModal, setIsOpenEditUserModal] = useState(false)
   const [searchValue, setSearchValue] = useState('') 
@@ -32,7 +32,7 @@ const PageMain = () => {
 
   const getListUsers = () => {
     applicationServiсes.getListUsers().then((list) => {
-      const sortList: any = [...list]
+      const sortList: UserInfo[] = [...list]
       sortList.sort((a: any, b: any) => typeSorting.desc ? b.id - a.id : a.id - b.id);
       if(searchValue !==''){
         onSearch(searchValue)
@@ -60,8 +60,9 @@ const getUserData = (data:UserInfo) =>{
     setTypeSorting({
       desc
     })
-    const sortList = [...userList]
-    const sortInitList = [...initUserList]
+  
+    const sortList:UserInfo[] = [...userList]
+    const sortInitList:UserInfo[] = [...initUserList]
     sortList.sort((a: any, b: any) => desc ? b.id - a.id : a.id - b.id);
     sortInitList.sort((a: any, b: any) => desc ? b.id - a.id : a.id - b.id);
     setInitUserList(sortInitList)
@@ -97,13 +98,14 @@ const getUserData = (data:UserInfo) =>{
               return onSearch(val)})} />
           </div>
         <div className='page-main__list'>
-          {userList.map((user: any) => {
+          { userList.length > 0? userList.map((user: UserInfo) => {
             return (
               <ListItem user={user} openModal={openEditUserModal} 
               getUserData={getUserData}
+              key={user.id}
               />              
             )
-          })}
+          }):<div className='page-main__empty-list'> Ничего нет</div>}
         </div>
       </div>
       <Modal

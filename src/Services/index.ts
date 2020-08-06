@@ -1,15 +1,21 @@
 import { UserInfo } from '../Interface';
 
 
+interface Params {
+  method: string,
+  body?: string,
+  headers: {}
+}
+
 export default class ApplicationServiсes {
   BASE_URL: string = "https://emphasoft-test-assignment.herokuapp.com/";
-  getResource = async (type: string, params: any) => {
+  getResource = async (type: string, params: Params) => {
     const res = await fetch(`${this.BASE_URL}${type}`, {
       ...params
     })
 
     if (!res.ok) {
-      const status  =  res.status
+      const status = res.status
       const resResult = res.json()
 
       return await {
@@ -30,7 +36,7 @@ export default class ApplicationServiсes {
         'Content-Type': 'application/json',
       }
     }
-    const res =  this.getResource(`api-token-auth/`, params);
+    const res = this.getResource(`api-token-auth/`, params);
     return res
   };
 
@@ -46,7 +52,7 @@ export default class ApplicationServiсes {
     return res
   };
 
-  createNewUser = async (body:UserInfo) => {
+  createNewUser = async (body: UserInfo) => {
     const params = {
       method: 'POST',
       body: JSON.stringify(body),
@@ -60,7 +66,7 @@ export default class ApplicationServiсes {
     return res
   };
 
-  editUser = async (body:UserInfo,id:number) => {
+  editUser = async (body: UserInfo, id: number) => {
     const params = {
       method: 'PATCH',
       body: JSON.stringify(body),

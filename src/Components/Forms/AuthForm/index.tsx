@@ -1,10 +1,12 @@
+import React, { useState } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+
 import { Form, Input, Button, message, Typography } from 'antd';
-import React,{useState} from 'react';
-import ApplicationServiсes from '../../../Services'
-import { withRouter } from 'react-router-dom';
-import './style.scss';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { UserInfo } from '../../../Interface';
+
+import ApplicationServiсes from '../../../Services'
+import './style.scss';
+
 interface Auth {
   username?: string;
   password?: string;
@@ -12,7 +14,8 @@ interface Auth {
 
 
 
-const AuthForm = (props: any) => {
+const AuthForm = (props: RouteComponentProps<any>) => {
+
   const applicationServiсes = new ApplicationServiсes();
   const { Title } = Typography;
   const [loading, setLoading] = useState(false)
@@ -48,7 +51,7 @@ const AuthForm = (props: any) => {
           name="username"
           rules={[
             { required: true, message: 'Пожалуйста введите имя!' },
-            { pattern: /^[\w.@+-]+$/g, message: 'имя содержит недопустимый знак' }
+            { pattern: /^[\w.@+-]+$/g, message: 'Имя содержит недопустимый символ' }
           ]}
         >
           <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
@@ -70,9 +73,9 @@ const AuthForm = (props: any) => {
         <Form.Item
           className="submit-block"
         >
-          <Button 
-          loading={loading}
-          type="primary" htmlType="submit" className="login-form-button">
+          <Button
+            loading={loading}
+            type="primary" htmlType="submit" className="login-form-button">
             Войти
       </Button>
         </Form.Item>

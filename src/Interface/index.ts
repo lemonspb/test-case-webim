@@ -5,7 +5,7 @@ export  interface UserInfo {
     last_name?: string;
     is_active?: boolean;
     is_superuser?: boolean;
-    id?: number | undefined;
+    id?: number;
     last_login?: string;
   }
   
