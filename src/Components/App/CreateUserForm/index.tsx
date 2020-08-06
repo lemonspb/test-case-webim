@@ -3,6 +3,7 @@ import React,{useState} from 'react';
 import ApplicationServiсes from '../../../Services'
 import {withRouter} from 'react-router-dom';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserInfo } from '../../../Interface';
 
 
 
@@ -12,14 +13,14 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
  const applicationServiсes = new ApplicationServiсes();
  const [loading, setLoading] = useState(false)
-  const initialValues:any = {
-    name:'',
+  const initialValues:UserInfo = {
+    username:'',
     password:'',
     first_name:'',
     last_name:'',
   }
 
-    const onFinish = (values:any) =>{
+    const onFinish = (values:UserInfo) =>{
       setLoading(true)
       console.log(values)
       if(values.is_active === undefined)  values.is_active = false

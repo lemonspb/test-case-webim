@@ -4,11 +4,12 @@ import ApplicationServiсes from '../../../Services'
 import { withRouter } from 'react-router-dom';
 import './style.scss';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-
+import { UserInfo } from '../../../Interface';
 interface Auth {
   username?: string;
   password?: string;
 }
+
 
 
 const AuthForm = (props: any) => {

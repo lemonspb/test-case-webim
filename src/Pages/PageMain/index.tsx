@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Spin, Modal, Input } from 'antd';
+import { Typography, Modal, Input } from 'antd';
 import Header from '../../Components/Header';
 import './style.scss';
 import CreateUserForm from '../../Components/App/CreateUserForm';
 import EditUserForm from '../../Components/App/EditUserForm';
-
+import { UserInfo } from '../../Interface'
 import ApplicationServiсes from '../../Services';
 import ListItem from '../../Components/ListItem';
 import { SortAscendingOutlined, SortDescendingOutlined } from '@ant-design/icons';
@@ -22,7 +22,7 @@ const PageMain = () => {
   const [typeSorting, setTypeSorting] = useState({desc: false})
   const [loader, setLoader] = useState(false)
 
-  const onSearch = (value: any) => {
+  const onSearch = (value: string) => {
     setSearchValue(value)
     setUserList(initUserList.filter((user: any) =>
       user.username.toLowerCase()
@@ -51,8 +51,7 @@ const PageMain = () => {
 
   }, [])
 
-const getUserData = (data:any) =>{
-  console.log(data)
+const getUserData = (data:UserInfo) =>{
   setUserdata(data)
 }
 
