@@ -12,8 +12,6 @@ interface Auth {
   password?: string;
 }
 
-
-
 const AuthForm = (props: RouteComponentProps<any>) => {
 
   const applicationServiсes = new ApplicationServiсes();
@@ -23,20 +21,31 @@ const AuthForm = (props: RouteComponentProps<any>) => {
   const onFinish = (values: Auth) => {
     setLoading(true)
     applicationServiсes.getTokenAuth(values).then((res) => {
-      if (res.hasOwnProperty('non_field_errors')) {
-        message.error('Не верный логин или пароль')
-        setLoading(false)
+      if (res.status === 'error') {
+        res.resResult.then((result: any) => {
+          if (result.hasOwnProperty('non_field_errors')) {
+            message.error('Не верный логин или пароль')
+            setLoading(false)
+          }
+          else {
+            message.error('Что-то пошло не так')
+            setLoading(false)
+          }
+        })
       }
-      if (res.hasOwnProperty('token')) {
-        localStorage.setItem('token', res.token)
-        message.success('Вы успешно зарегестрированы')
-        setLoading(false)
-        props.history.push('/main');
-        window.location.reload()
-      }
+      if (res.status === 'ok') {
+        res.resResult.then((result: any) => {
+          if (result.hasOwnProperty('token')) {
+            localStorage.setItem('token', result.token)
+            message.success('Вы успешно зарегестрированы')
+            setLoading(false)
+            props.history.push('/main');
+            window.location.reload()
+          }
+        })
+      };
     })
-  };
-
+  }
 
   return (
     <div className='auth-form'>

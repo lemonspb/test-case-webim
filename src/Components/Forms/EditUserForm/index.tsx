@@ -5,14 +5,14 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { UserInfo } from '../../../Interface';
 
 
-interface  EditUserForm extends RouteComponentProps<any> {
+interface EditUserForm extends RouteComponentProps<any> {
   userData: UserInfo;
   getListUsers: Function,
   openModal: Function
 }
 
 
-const EditUserForm = (props:EditUserForm) => {
+const EditUserForm = (props: EditUserForm) => {
   const [form] = Form.useForm();
   const { id = 0 } = props.userData
   const applicationServiсes = new ApplicationServiсes();
@@ -25,13 +25,30 @@ const EditUserForm = (props:EditUserForm) => {
 
   const onFinish = (values: UserInfo) => {
     setLoading(true)
-    applicationServiсes.editUser(values, id).then((val) => {
+
+    if (values.is_active === undefined) values.is_active = false
+
+    applicationServiсes.editUser(values, id).then((res) => {
       setLoading(false)
-      message.success('Пользователь отредактирован')
-      setLoading(false)
-      props.openModal();
-      form.resetFields();
-      props.getListUsers();
+      if (res.status === 'error') {
+        res.resResult.then((result: UserInfo) => {
+          for (let key in props.userData) {
+            if (result.hasOwnProperty(key)) {
+              message.error('Такие данные уже используются')
+              setLoading(false)
+            }
+          }
+        })
+      }
+      if (res.status === 'ok') {
+        res.resResult.then((result: UserInfo) => {
+          message.success(' Пользователь отредактирован')
+          setLoading(false)
+          props.openModal();
+          form.resetFields();
+          props.getListUsers();
+        })
+      }
     })
   };
 
@@ -49,7 +66,7 @@ const EditUserForm = (props:EditUserForm) => {
             { required: true, message: 'Пожалуйста введите имя!' }
           ]}
         >
-          <Input  placeholder="Username" />
+          <Input placeholder="Username" />
         </Form.Item>
         <Form.Item
           name="password"

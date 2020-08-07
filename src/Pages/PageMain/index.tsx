@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Modal, Input } from 'antd';
+import { Typography, Modal, Input,message } from 'antd';
 import Header from '../../Components/Header';
 import './style.scss';
 import CreateUserForm from '../../Components/Forms/CreateUserForm';
@@ -20,19 +20,20 @@ const PageMain = () => {
   const [isOpenEditUserModal, setIsOpenEditUserModal] = useState(false)
   const [searchValue, setSearchValue] = useState('') 
   const [typeSorting, setTypeSorting] = useState({desc: false})
-  const [loader, setLoader] = useState(false)
 
   const onSearch = (value: string) => {
     setSearchValue(value)
-    setUserList(initUserList.filter((user: any) =>
-      user.username.toLowerCase()
+    setUserList(initUserList.filter((user:UserInfo) =>
+      user?.username?.toLowerCase()
         .includes(value.toLowerCase().trimStart())))
   }
 
 
   const getListUsers = () => {
-    applicationServiсes.getListUsers().then((list) => {
-      const sortList: UserInfo[] = [...list]
+    applicationServiсes.getListUsers().then((res) => {
+      if(res.status === 'ok'){
+      res.resResult.then((list:UserInfo[])=>{
+      const sortList = [...list]
       sortList.sort((a: any, b: any) => typeSorting.desc ? b.id - a.id : a.id - b.id);
       if(searchValue !==''){
         onSearch(searchValue)
@@ -41,14 +42,15 @@ const PageMain = () => {
         setInitUserList(sortList)
         setUserList(sortList)
       }
-
+        })
+        if(res.status === 'error'){
+          message.error('Не удалось загрузить список пользователей')
+        }
+      }
     })
   }
   useEffect(() => {
-    setLoader(true)
     getListUsers()
-    setLoader(false)
-
   }, [])
 
 const getUserData = (data:UserInfo) =>{

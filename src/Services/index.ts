@@ -10,21 +10,23 @@ interface Params {
 export default class ApplicationServiсes {
   BASE_URL: string = "https://emphasoft-test-assignment.herokuapp.com/";
   getResource = async (type: string, params: Params) => {
-    const res = await fetch(`${this.BASE_URL}${type}`, {
-      ...params
-    })
-
-    if (!res.ok) {
-      const status = res.status
-      const resResult = res.json()
-
-      return await {
-        resResult,
-        status
+return fetch(`${this.BASE_URL}${type}`, {...params})
+    .then(res => {
+      if (!res.ok) {
+        return {
+          status: 'error',
+          resResult: res.json(),
+        };
       }
-    }
-    return await res.json();
-
+      else{
+        return {
+        status: 'ok',
+        resResult: res.json(),
+        }
+      }
+    }).catch(e => {
+      return e;
+    });
   };
 
   getTokenAuth = async (body: UserInfo) => {
