@@ -26,6 +26,7 @@ const EditUserForm = (props: EditUserForm) => {
   const onFinish = (values: UserInfo) => {
     setLoading(true)
 
+    if (values.is_active === undefined) values.is_active = false
 
     applicationServiсes.editUser(values, id).then((res) => {
       setLoading(false)

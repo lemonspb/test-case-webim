@@ -21,6 +21,7 @@ const CreateUserForm = (props: any) => {
 
   const onFinish = (values: UserInfo) => {
     setLoading(true)
+    if (values.is_active === undefined) values.is_active = false
     applicationServiсes.createNewUser(values).then((res) => {
       if (res.status === 'error') {
         res.resResult.then((result: any) => {
