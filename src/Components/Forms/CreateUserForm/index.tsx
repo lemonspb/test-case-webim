@@ -30,10 +30,6 @@ const CreateUserForm = (props: any) => {
               message.error('Такие данные уже используются')
               setLoading(false)
             }
-            else {
-              message.error('Что-то пошло не так')
-              setLoading(false)
-            }
           }
 
         })
