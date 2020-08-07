@@ -14,7 +14,7 @@ interface EditUserForm extends RouteComponentProps<any> {
 
 const EditUserForm = (props: EditUserForm) => {
   const [form] = Form.useForm();
-  const { id = 0 } = props.userData
+  const { id = 0, is_active } = props.userData
   const applicationServiсes = new ApplicationServiсes();
   const [loading, setLoading] = useState(false)
 
@@ -26,7 +26,6 @@ const EditUserForm = (props: EditUserForm) => {
   const onFinish = (values: UserInfo) => {
     setLoading(true)
 
-    if (values.is_active === undefined) values.is_active = false
 
     applicationServiсes.editUser(values, id).then((res) => {
       setLoading(false)
@@ -102,7 +101,7 @@ const EditUserForm = (props: EditUserForm) => {
           />
         </Form.Item>
         <Form.Item name="is_active" label="Active" >
-          <Switch />
+          <Switch defaultChecked={is_active} />
         </Form.Item>
         <Form.Item
           className="submit-block"

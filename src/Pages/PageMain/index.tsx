@@ -35,14 +35,11 @@ const PageMain = () => {
       res.resResult.then((list:UserInfo[])=>{
       const sortList = [...list]
       sortList.sort((a: any, b: any) => typeSorting.desc ? b.id - a.id : a.id - b.id);
+      setUserList(sortList)
+      setInitUserList(sortList)
       if(searchValue !==''){
         onSearch(searchValue)
-      } 
-      else{
-        setInitUserList(sortList)
-        setUserList(sortList)
-      }
-        })
+      }})
         if(res.status === 'error'){
           message.error('Не удалось загрузить список пользователей')
         }
