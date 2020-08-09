@@ -101,7 +101,7 @@ const EditUserForm = (props: EditUserForm) => {
             placeholder="Last name"
           />
         </Form.Item>
-        <Form.Item name="is_active" label="Active" >
+        <Form.Item name="is_active" label="Active" valuePropName="checked">
           <Switch defaultChecked={is_active} />
         </Form.Item>
         <Form.Item

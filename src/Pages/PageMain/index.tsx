@@ -27,9 +27,8 @@ const PageMain = () => {
   }, [])
 
   const onSearch = (value: string) => {
-    const abc = initUserList
     setSearchValue(value)
-    setUserList(abc.filter((user:UserInfo) =>
+    setUserList(initUserList.filter((user:UserInfo) =>
       user?.username?.toLowerCase()
         .includes(value.toLowerCase().trimStart())))
   }

@@ -24,7 +24,7 @@ const CreateUserForm = (props: any) => {
     if (values.is_active === undefined) values.is_active = false
     applicationServiсes.createNewUser(values).then((res) => {
       if (res.status === 'error') {
-        res.resResult.then((result: any) => {
+        res.resResult.then((result: UserInfo) => {
           for (let value in initialValues) {
             if (result.hasOwnProperty(value)) {
               message.error('Такие данные уже используются')
@@ -35,7 +35,7 @@ const CreateUserForm = (props: any) => {
         })
       }
       if (res.status === 'ok') {
-        res.resResult.then((result: any) => {
+        res.resResult.then((result: UserInfo) => {
           message.success('Создан новый пользователь')
           setLoading(false)
           props.openModal()
@@ -96,8 +96,8 @@ const CreateUserForm = (props: any) => {
             placeholder="Last name"
           />
         </Form.Item>
-        <Form.Item name="is_active" label="Active">
-          <Switch defaultChecked={false}/>
+        <Form.Item name="is_active" label="Active" valuePropName="checked">
+          <Switch />
         </Form.Item>
         <Form.Item
           className="submit-block"
