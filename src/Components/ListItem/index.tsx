@@ -5,7 +5,7 @@ import { UserInfo } from '../../Interface';
 
 
 interface ListItem {
-  user: UserInfo;
+  user: UserInfo,
   getUserData: Function,
   openModal: Function
 }

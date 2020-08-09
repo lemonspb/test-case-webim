@@ -21,9 +21,15 @@ const PageMain = () => {
   const [searchValue, setSearchValue] = useState('') 
   const [typeSorting, setTypeSorting] = useState({desc: false})
 
+
+  useEffect(() => {
+    getListUsers()
+  }, [])
+
   const onSearch = (value: string) => {
+    const abc = initUserList
     setSearchValue(value)
-    setUserList(initUserList.filter((user:UserInfo) =>
+    setUserList(abc.filter((user:UserInfo) =>
       user?.username?.toLowerCase()
         .includes(value.toLowerCase().trimStart())))
   }
@@ -40,15 +46,12 @@ const PageMain = () => {
       if(searchValue !==''){
         onSearch(searchValue)
       }})
-        if(res.status === 'error'){
-          message.error('Не удалось загрузить список пользователей')
-        }
+      }
+      if(res.status === 'error'){
+        message.error('Не удалось загрузить список пользователей')
       }
     })
   }
-  useEffect(() => {
-    getListUsers()
-  }, [])
 
 const getUserData = (data:UserInfo) =>{
   setUserdata(data)

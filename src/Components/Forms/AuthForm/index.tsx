@@ -12,6 +12,7 @@ interface Auth {
   password?: string;
 }
 
+
 const AuthForm = (props: RouteComponentProps<any>) => {
 
   const applicationServiсes = new ApplicationServiсes();

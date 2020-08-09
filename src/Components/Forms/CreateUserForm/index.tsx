@@ -38,10 +38,10 @@ const CreateUserForm = (props: any) => {
         res.resResult.then((result: any) => {
           message.success('Создан новый пользователь')
           setLoading(false)
-          props.openModal();
+          props.openModal()
           values = initialValues
-          form.resetFields();
-          props.getListUsers();
+          form.resetFields()
+          props.getListUsers()
         })
       }
     })

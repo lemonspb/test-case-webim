@@ -1,12 +1,12 @@
 import React from 'react';
 import { PageHeader, Button } from 'antd';
-import ApplicationServiсes from '../../Services'
+import ApplicationServiсes from '../../Services';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 
-interface  Header extends RouteComponentProps<any> {
+interface Header extends RouteComponentProps<any> {
     openModal: Function
-  }
-  
+}
+
 
 
 const Header = (props: Header) => {
@@ -14,7 +14,7 @@ const Header = (props: Header) => {
 
     const exit = () => {
         applicationServiсes.exit()
-        props.history.push('/login');
+        props.history.push('/login')
     }
 
 
@@ -27,11 +27,11 @@ const Header = (props: Header) => {
                 subTitle="Главная страница"
                 extra={[
                     <Button key="1" type="primary" danger onClick={() => props.openModal()}>
-                    Создать пользователя
+                        Создать пользователя
                   </Button>,
                     <Button key="2" type="primary" onClick={() => exit()}>
                         Выход
-            </Button>,
+                    </Button>,
                 ]}
             />
         </div>

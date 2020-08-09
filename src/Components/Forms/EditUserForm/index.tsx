@@ -6,21 +6,21 @@ import { UserInfo } from '../../../Interface';
 
 
 interface EditUserForm extends RouteComponentProps<any> {
-  userData: UserInfo;
+  userData: UserInfo,
   getListUsers: Function,
   openModal: Function
 }
 
 
 const EditUserForm = (props: EditUserForm) => {
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
   const { id = 0, is_active } = props.userData
-  const applicationServiсes = new ApplicationServiсes();
+  const applicationServiсes = new ApplicationServiсes()
   const [loading, setLoading] = useState(false)
 
 
   useEffect(() => {
-    form.resetFields();
+    form.resetFields()
   }, [props.userData])
 
   const onFinish = (values: UserInfo) => {
@@ -29,13 +29,13 @@ const EditUserForm = (props: EditUserForm) => {
     if (values.is_active === undefined) values.is_active = false
 
     applicationServiсes.editUser(values, id).then((res) => {
-      setLoading(false)
+      setLoading(false);
       if (res.status === 'error') {
         res.resResult.then((result: UserInfo) => {
           for (let key in props.userData) {
             if (result.hasOwnProperty(key)) {
               message.error('Такие данные уже используются')
-              setLoading(false)
+              setLoading(false);
             }
           }
         })
@@ -44,9 +44,9 @@ const EditUserForm = (props: EditUserForm) => {
         res.resResult.then((result: UserInfo) => {
           message.success(' Пользователь отредактирован')
           setLoading(false)
-          props.openModal();
-          form.resetFields();
-          props.getListUsers();
+          props.openModal()
+          form.resetFields()
+          props.getListUsers()
         })
       }
     })
